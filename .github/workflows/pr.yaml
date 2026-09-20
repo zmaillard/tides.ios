@@ -1,0 +1,27 @@
+name: Build and Test Pull Request
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: xcode-27
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build
+        run: |
+          xcodebuild \
+            -project tides.xcodeproj \
+            -scheme rpbrowser \
+            -destination 'platform=iOS Simulator,OS=27.0,name=iPhone 17' \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            PROVISIONING_PROFILE_SPECIFIER="" \
+            DEVELOPMENT_TEAM="" \
+            ENABLE_HARDENED_RUNTIME=NO \
+            build-for-testing
+
