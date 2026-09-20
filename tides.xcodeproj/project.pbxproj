@@ -6,14 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		5203230E305F71F9009BD32A /* station.json in Resources */ = {isa = PBXBuildFile; fileRef = 5203230D305F71F9009BD32A /* station.json */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		5203230D305F71F9009BD32A /* station.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = station.json; sourceTree = "<group>"; };
 		5214CF7B3055ECB900A19018 /* tides.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tides.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		5214CF7D3055ECB900A19018 /* tides */ = {
+		5214CF7D3055ECB900A19018 /* Tides */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = tides;
+			path = Tides;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,7 +37,8 @@
 		5214CF723055ECB900A19018 = {
 			isa = PBXGroup;
 			children = (
-				5214CF7D3055ECB900A19018 /* tides */,
+				5203230D305F71F9009BD32A /* station.json */,
+				5214CF7D3055ECB900A19018 /* Tides */,
 				5214CF7C3055ECB900A19018 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,7 +67,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				5214CF7D3055ECB900A19018 /* tides */,
+				5214CF7D3055ECB900A19018 /* Tides */,
 			);
 			name = tides;
 			packageProductDependencies = (
@@ -109,6 +115,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5203230E305F71F9009BD32A /* station.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
