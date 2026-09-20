@@ -15,7 +15,7 @@ jobs:
         run: |
           xcodebuild \
             -project tides.xcodeproj \
-            -scheme rpbrowser \
+            -scheme tides \
             -destination 'platform=iOS Simulator,OS=27.0,name=iPhone 17' \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
