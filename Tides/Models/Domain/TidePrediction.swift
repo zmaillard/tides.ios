@@ -22,7 +22,21 @@ enum TideStage: String, CustomStringConvertible {
 
 struct TidePrediction: Equatable, Identifiable {
     let id = UUID()
-    let time: Date
+    let timeGMT: Date
+    let localTimeZoneDisplay: String
     let value: Decimal
     let stage: TideStage
+    
+    let timeZoneLocal: TimeZone
+    
+    
+    func timeDisplayLocalTime(dateFormat: String) -> String {
+        let format = DateFormatter()
+        format.timeZone = self.timeZoneLocal
+         
+        format.dateFormat = dateFormat
+         
+        return format.string(from: self.timeGMT)
+    }
 }
+
