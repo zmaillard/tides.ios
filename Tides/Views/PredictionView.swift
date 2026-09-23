@@ -31,9 +31,19 @@ struct PredictionView: View {
                     Text("Loading...")
                 }.navigationTitle("Loading Forecast")
             case .loaded(let predictions):
-                List(predictions){ pred in
+                 VStack {
+                     Text(station[0].name).font(.title)
+                     if let first = predictions.first {
+                         NextStage(prediction: first)
+                     }
+                     if predictions.count > 1 {
+                         NextStage(prediction: predictions[1])
+                     }
+                     Graph(predictions: predictions)
+                 }
+                 /*List(predictions){ pred in
                     PredictionListItem(prediction: pred)
-                }.navigationTitle(forecastViewModel.title)
+                }.navigationTitle(forecastViewModel.title)*/
             case .error(let error):
                 Text(error).foregroundStyle(Color.red)
             }
@@ -48,7 +58,6 @@ struct PredictionView: View {
                     navigator.push(.settings)
                 }.labelStyle(.iconOnly)
                     
-                
             }
         }
     }
