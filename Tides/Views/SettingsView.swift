@@ -5,33 +5,25 @@
 //  Created by Zach Maillard on 9/12/26.
 //
 import SwiftUI
-import CoreLocation
-import MapKit
-internal import Combine
+import SwiftData
 
 struct SettingsView: View {
-    @StateObject var viewModel: SettingsViewModel
-    @FocusState private var isFocusedField: Bool
+    @AppStorage("StationId") private var selectedStation = ""
+    @AppStorage("Units") private var selectedUnits: Units = .english
+    
+    @Query(sort: \Station.name) private var stations: [Station]
+    
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            TextField("Type address", text: $viewModel.searchableText)
-                .padding()
-                .autocorrectionDisabled(true)
-                .focused($isFocusedField)
-                .font(.title)
-                .onReceive(
-                  viewModel.$searchableText.debounce(for: .seconds(1), scheduler: DispatchQueue.main)
-                 ){
-                     viewModel.searchAddress($0)
-                 }
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .onSubmit {
-                    viewModel.searchAddress(viewModel.searchableText)
-                    isFocusedField = false
+        List {
+            Picker("Station", selection: $selectedStation) {
+                ForEach(stations){ value in
+                    Text(value.name)//.tag(value.id)
                 }
-            List {
-                
+            }
+            Picker("Units", selection: $selectedUnits) {
+                Text(Units.english.description).tag(Units.english)
+                Text(Units.metric.description).tag(Units.metric)
             }
         }
     }

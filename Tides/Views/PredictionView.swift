@@ -9,13 +9,11 @@ import SwiftData
 
 struct PredictionView: View {
     @Environment(Navigator.self) private var navigator
-    @Environment(\.modelContext) var modelContext
-    @AppStorage("StationId") private var stationId = ""
     
     @Query private var station: [Station]
     @State var forecastViewModel = ForecastViewModel()
     
-    init() {
+    init(stationId: String) {
         let predicate = #Predicate<Station> { station in
             station.id == stationId
         }
@@ -24,12 +22,8 @@ struct PredictionView: View {
     }
     
     var body: some View {
-        VStack {
-            Text(stationId)
-            if !station.isEmpty {
-                Text(station[0].name)
-            }
-            switch forecastViewModel.state {
+        Group {
+             switch forecastViewModel.state {
             case .idle:
                 Text("No data yet")
             case .loading:
@@ -38,14 +32,13 @@ struct PredictionView: View {
                 }.navigationTitle("Loading Forecast")
             case .loaded(let predictions):
                 List(predictions){ pred in
-                    PredictionListItem(prediction: pred)
+                    PredictionListItem(prediction: pred, station: station[0])
                 }.navigationTitle(forecastViewModel.title)
             case .error(let error):
                 Text(error).foregroundStyle(Color.red)
             }
         }
-        .padding()
-        .task {
+        .task{
             if !station.isEmpty {
                 await forecastViewModel.fetch(for: station[0])
             }
@@ -59,8 +52,9 @@ struct PredictionView: View {
             }
         }
     }
+    
 }
 
 #Preview {
-    PredictionView()
+    PredictionView(stationId: "")
 }
