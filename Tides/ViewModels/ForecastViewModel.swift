@@ -24,11 +24,14 @@ class ForecastViewModel {
         self.state = .loading
         do {
             title = "Forecast for \(station.name)"
+            
+            let now = Date.now
             let predictionResult =  try await service.getCurrentForecast(station: station.id)
             let predDomain = predictionResult.predictions
                 .map { $0.toDomain(station: station) }
                 .filter{$0 != nil}
                 .map{$0!}
+                .filter{$0.timeGMT >= now}
             
             self.state = .loaded(predDomain)
         } catch let error as APIError{

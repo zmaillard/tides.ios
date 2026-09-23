@@ -32,7 +32,7 @@ struct PredictionView: View {
                 }.navigationTitle("Loading Forecast")
             case .loaded(let predictions):
                 List(predictions){ pred in
-                    PredictionListItem(prediction: pred, station: station[0])
+                    PredictionListItem(prediction: pred)
                 }.navigationTitle(forecastViewModel.title)
             case .error(let error):
                 Text(error).foregroundStyle(Color.red)

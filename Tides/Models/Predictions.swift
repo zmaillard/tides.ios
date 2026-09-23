@@ -39,10 +39,14 @@ struct Prediction : Identifiable, Equatable, Codable {
             tideStage = TideStage.low
         }
         
-        if let tideStage = tideStage, let value = Decimal(string: self.v), let date = date  {
-            return TidePrediction(time: date, value: value, stage: tideStage)
+        let localOffset: Int = station.observeDST ? station.timeZoneOffset + 1 : station.timeZoneOffset
+        let targetTz = TimeZone(secondsFromGMT: 60 * 60 * localOffset)
+
+        if let tideStage = tideStage, let value = Decimal(string: self.v), let date = date, let localTime = targetTz  {
+            return TidePrediction(timeGMT: date, localTimeZoneDisplay: station.timeZone, value: value, stage: tideStage, timeZoneLocal: localTime)
         }
         
         return nil
     }
+    
 }
