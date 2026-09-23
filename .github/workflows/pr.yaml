@@ -25,3 +25,10 @@ jobs:
             ENABLE_HARDENED_RUNTIME=NO \
             build-for-testing
 
+      - name: Test
+        run: |
+          xcodebuild \
+            -project tides.xcodeproj \
+            -scheme tides \
+            -destination 'platform=iOS Simulator,OS=27.0,name=iPhone 17' \
+            test-without-building
