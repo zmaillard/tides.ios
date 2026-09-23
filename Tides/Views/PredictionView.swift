@@ -33,8 +33,12 @@ struct PredictionView: View {
             case .loaded(let predictions):
                  VStack {
                      Text(station[0].name).font(.title)
-                     NextStage(prediction: predictions.first!)
-                     NextStage(prediction: predictions[1])
+                     if let first = predictions.first {
+                         NextStage(prediction: first)
+                     }
+                     if predictions.count > 1 {
+                         NextStage(prediction: predictions[1])
+                     }
                      Graph(predictions: predictions)
                  }
                  /*List(predictions){ pred in

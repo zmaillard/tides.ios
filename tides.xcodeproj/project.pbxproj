@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5203230E305F71F9009BD32A /* station.json in Resources */ = {isa = PBXBuildFile; fileRef = 5203230D305F71F9009BD32A /* station.json */; };
+		520325A430640486009BD32A /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = 520325A330640486009BD32A /* ViewInspector */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				520325A430640486009BD32A /* ViewInspector in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,6 +99,7 @@
 			);
 			name = TidesTests;
 			packageProductDependencies = (
+				520325A330640486009BD32A /* ViewInspector */,
 			);
 			productName = TidesTests;
 			productReference = 520323AC30635DED009BD32A /* TidesTests.xctest */;
@@ -152,6 +155,9 @@
 			);
 			mainGroup = 5214CF723055ECB900A19018;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				520325A230640486009BD32A /* XCRemoteSwiftPackageReference "ViewInspector" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5214CF7C3055ECB900A19018 /* Products */;
 			projectDirPath = "";
@@ -477,6 +483,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		520325A230640486009BD32A /* XCRemoteSwiftPackageReference "ViewInspector" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nalexn/ViewInspector";
+			requirement = {
+				kind = exactVersion;
+				version = 0.10.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		520325A330640486009BD32A /* ViewInspector */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 520325A230640486009BD32A /* XCRemoteSwiftPackageReference "ViewInspector" */;
+			productName = ViewInspector;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5214CF733055ECB900A19018 /* Project object */;
 }
