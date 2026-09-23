@@ -9,7 +9,7 @@ import SwiftUI
 
 @Observable
 class ForecastViewModel {
-    var state: LoadingState<[Prediction]> = .idle
+    var state: LoadingState<[TidePrediction]> = .idle
     private let service: TideService
     
     var title: String = ""
@@ -25,7 +25,12 @@ class ForecastViewModel {
         do {
             title = "Forecast for \(station.name)"
             let predictionResult =  try await service.getCurrentForecast(station: station.id)
-            self.state = .loaded(predictionResult.predictions)
+            let predDomain = predictionResult.predictions
+                .map { $0.toDomain(station: station) }
+                .filter{$0 != nil}
+                .map{$0!}
+            
+            self.state = .loaded(predDomain)
         } catch let error as APIError{
             self.state = .error(error.errorDescription ?? "unknown error")
         } catch {

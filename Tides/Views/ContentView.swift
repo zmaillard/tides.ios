@@ -10,18 +10,19 @@ import SwiftData
 
 struct ContentView: View {
     @State private var navigator = Navigator()
-    
+    @AppStorage("StationId") private var stationId = ""
+
     
     var body: some View {
         @Bindable var navigator = navigator
         NavigationStack(path: $navigator.path) {
-            PredictionView()
+            PredictionView(stationId: stationId)
                 .navigationDestination(for: Screen.self) { route in
                     switch route {
                     case .root:
-                        PredictionView()
+                        PredictionView(stationId: stationId)
                     case .settings:
-                        SettingsView(viewModel: SettingsViewModel())
+                        SettingsView()
                     }
                 }
         }.onOpenURL{ url in
