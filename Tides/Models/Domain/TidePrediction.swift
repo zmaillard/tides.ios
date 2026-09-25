@@ -20,7 +20,7 @@ enum TideStage: String, CustomStringConvertible {
     }
 }
 
-struct TidePrediction: Equatable, Identifiable {
+struct TidePrediction: TimeSeries, Equatable, Identifiable {
     let id = UUID()
     let timeGMT: Date
     let localTimeZoneDisplay: String
@@ -29,14 +29,5 @@ struct TidePrediction: Equatable, Identifiable {
     
     let timeZoneLocal: TimeZone
     
-    
-    func timeDisplayLocalTime(dateFormat: String) -> String {
-        let format = DateFormatter()
-        format.timeZone = self.timeZoneLocal
-         
-        format.dateFormat = dateFormat
-         
-        return format.string(from: self.timeGMT)
-    }
 }
 

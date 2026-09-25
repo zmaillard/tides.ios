@@ -11,14 +11,14 @@ struct PredictionResult : Codable {
     
 }
 
-struct Prediction : Identifiable, Equatable, Codable {
-    let id: String
+struct Prediction : Equatable, Codable {
+    let t: String
     let v: String
     let type: String // H or L
     
     
     enum CodingKeys: String, CodingKey {
-        case id = "t"
+        case t
         case v
         case type
     }
@@ -29,7 +29,7 @@ struct Prediction : Identifiable, Equatable, Codable {
         localTimeDateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         localTimeDateFormatter.timeZone =  TimeZone(abbreviation: "GMT")
         
-        let date = localTimeDateFormatter.date(from: self.id)
+        let date = localTimeDateFormatter.date(from: self.t)
         
         
         var tideStage:TideStage?

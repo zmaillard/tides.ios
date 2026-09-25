@@ -9,7 +9,8 @@ import SwiftData
 
 struct PredictionView: View {
     @Environment(Navigator.self) private var navigator
-    
+    @AppStorage("Units") private var selectedUnits: Units = .english
+
     @Query private var station: [Station]
     @State var forecastViewModel = ForecastViewModel()
     
@@ -30,27 +31,27 @@ struct PredictionView: View {
                 ProgressView {
                     Text("Loading...")
                 }.navigationTitle("Loading Forecast")
-            case .loaded(let predictions):
+            case .loaded(let conditions):
                  VStack {
                      Text(station[0].name).font(.title)
-                     if let first = predictions.first {
+                     if let current = conditions.currentCondition {
+                         CurrentStage(condition: current)
+                     }
+                     if let first = conditions.predictions.first {
                          NextStage(prediction: first)
                      }
-                     if predictions.count > 1 {
-                         NextStage(prediction: predictions[1])
+                     if conditions.predictions.count > 1 {
+                         NextStage(prediction: conditions.predictions[1])
                      }
-                     Graph(predictions: predictions)
+                     Graph(predictions: conditions.predictions)
                  }
-                 /*List(predictions){ pred in
-                    PredictionListItem(prediction: pred)
-                }.navigationTitle(forecastViewModel.title)*/
             case .error(let error):
                 Text(error).foregroundStyle(Color.red)
             }
         }
         .task{
             if !station.isEmpty {
-                await forecastViewModel.fetch(for: station[0])
+                await forecastViewModel.fetch(for: station[0], units: selectedUnits)
             }
         }.toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
