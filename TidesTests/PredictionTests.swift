@@ -28,53 +28,53 @@ struct PredictionTests {
 
     @Test("Uppercase H maps to high tide")
     func uppercaseHighMapsToHighStage() {
-        let prediction = Prediction(id: "2026-09-22 06:00", v: "1.5", type: "H")
+        let prediction = Prediction(t: "2026-09-22 06:00", v: "1.5", type: "H")
         let domain = prediction.toDomain(station: makeStation())
         #expect(domain?.stage == .high)
     }
 
     @Test("Uppercase L maps to low tide")
     func uppercaseLowMapsToLowStage() {
-        let prediction = Prediction(id: "2026-09-22 06:00", v: "1.5", type: "L")
+        let prediction = Prediction(t: "2026-09-22 06:00", v: "1.5", type: "L")
         let domain = prediction.toDomain(station: makeStation())
         #expect(domain?.stage == .low)
     }
 
     @Test("Lowercase h maps to high tide")
     func lowercaseHighMapsToHighStage() {
-        let prediction = Prediction(id: "2026-09-22 06:00", v: "1.5", type: "h")
+        let prediction = Prediction(t: "2026-09-22 06:00", v: "1.5", type: "h")
         let domain = prediction.toDomain(station: makeStation())
         #expect(domain?.stage == .high)
     }
 
     @Test("Lowercase l maps to low tide")
     func lowercaseLowMapsToLowStage() {
-        let prediction = Prediction(id: "2026-09-22 06:00", v: "1.5", type: "l")
+        let prediction = Prediction(t: "2026-09-22 06:00", v: "1.5", type: "l")
         let domain = prediction.toDomain(station: makeStation())
         #expect(domain?.stage == .low)
     }
 
     @Test("Malformed date string returns nil")
     func malformedDateReturnsNil() {
-        let prediction = Prediction(id: "not-a-date", v: "1.5", type: "H")
+        let prediction = Prediction(t: "not-a-date", v: "1.5", type: "H")
         #expect(prediction.toDomain(station: makeStation()) == nil)
     }
 
     @Test("Unknown type code returns nil")
     func unknownTypeCodeReturnsNil() {
-        let prediction = Prediction(id: "2026-09-22 06:00", v: "1.5", type: "X")
+        let prediction = Prediction(t: "2026-09-22 06:00", v: "1.5", type: "X")
         #expect(prediction.toDomain(station: makeStation()) == nil)
     }
 
     @Test("Non-numeric value returns nil")
     func nonNumericValueReturnsNil() {
-        let prediction = Prediction(id: "2026-09-22 06:00", v: "abc", type: "H")
+        let prediction = Prediction(t: "2026-09-22 06:00", v: "abc", type: "H")
         #expect(prediction.toDomain(station: makeStation()) == nil)
     }
 
     @Test("Valid GMT date string parses to expected date components")
     func validDateParsesCorrectly() throws {
-        let prediction = Prediction(id: "2026-09-22 06:30", v: "1.5", type: "H")
+        let prediction = Prediction(t: "2026-09-22 06:30", v: "1.5", type: "H")
         let domain = try #require(prediction.toDomain(station: makeStation()))
 
         var calendar = Calendar(identifier: .gregorian)
@@ -91,7 +91,7 @@ struct PredictionTests {
     @Test("Non-DST station keeps configured timezone offset")
     func nonDSTStationKeepsOffset() throws {
         let station = makeStation(observeDST: false, timeZoneOffset: -8)
-        let prediction = Prediction(id: "2026-09-22 06:00", v: "1.5", type: "H")
+        let prediction = Prediction(t: "2026-09-22 06:00", v: "1.5", type: "H")
         let domain = try #require(prediction.toDomain(station: station))
 
         #expect(domain.timeZoneLocal.secondsFromGMT() == -8 * 3600)
@@ -100,7 +100,7 @@ struct PredictionTests {
     @Test("DST station applies one hour offset adjustment")
     func dstStationAppliesOneHourAdjustment() throws {
         let station = makeStation(observeDST: true, timeZoneOffset: -8)
-        let prediction = Prediction(id: "2026-09-22 06:00", v: "1.5", type: "H")
+        let prediction = Prediction(t: "2026-09-22 06:00", v: "1.5", type: "H")
         let domain = try #require(prediction.toDomain(station: station))
 
         #expect(domain.timeZoneLocal.secondsFromGMT() == -7 * 3600)
@@ -109,7 +109,7 @@ struct PredictionTests {
     @Test("localTimeZoneDisplay matches station timezone label")
     func localTimeZoneDisplayMatchesStation() throws {
         let station = makeStation(timeZone: "America/Los_Angeles")
-        let prediction = Prediction(id: "2026-09-22 06:00", v: "1.5", type: "H")
+        let prediction = Prediction(t: "2026-09-22 06:00", v: "1.5", type: "H")
         let domain = try #require(prediction.toDomain(station: station))
 
         #expect(domain.localTimeZoneDisplay == "America/Los_Angeles")
@@ -122,7 +122,7 @@ struct PredictionTests {
         """.data(using: .utf8)!
 
         let decoded = try JSONDecoder().decode(Prediction.self, from: json)
-        #expect(decoded.id == "2026-09-22 06:00")
+        #expect(decoded.t == "2026-09-22 06:00")
         #expect(decoded.v == "1.5")
         #expect(decoded.type == "H")
     }
@@ -144,7 +144,7 @@ struct PredictionTests {
 
     @Test("Prediction encodes back with 't' key")
     func predictionRoundTripsThroughEncoding() throws {
-        let prediction = Prediction(id: "2026-09-22 06:00", v: "1.5", type: "H")
+        let prediction = Prediction(t: "2026-09-22 06:00", v: "1.5", type: "H")
         let data = try JSONEncoder().encode(prediction)
         let object = try JSONSerialization.jsonObject(with: data) as? [String: Any]
 
