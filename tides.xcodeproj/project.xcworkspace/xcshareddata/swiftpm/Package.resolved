@@ -1,6 +1,15 @@
 {
-  "originHash" : "7abf1dd76d62709d50ab97ba7b5907de6a95cbc813d2bf154db0688b92d85914",
+  "originHash" : "3809e653235f389ff8289e820f18700b74132eced590da62f59776ecd312ca89",
   "pins" : [
+    {
+      "identity" : "rtree",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/emma-k-alexandra/RTree",
+      "state" : {
+        "revision" : "d0585640916a1d793e50ee5676c58de183936492",
+        "version" : "2.2.1"
+      }
+    },
     {
       "identity" : "viewinspector",
       "kind" : "remoteSourceControl",
